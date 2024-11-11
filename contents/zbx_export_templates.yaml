@@ -1,0 +1,856 @@
+zabbix_export:
+  version: '5.4'
+  date: '2024-11-11T18:38:21Z'
+  groups:
+    -
+      uuid: 983da8dcf932464d929c287ff2f092fd
+      name: 'OLT INTELBRAS GPON'
+  templates:
+    -
+      uuid: 70c93ad3072b4ba2a81b709a24b5ad4d
+      template: OLT_INTELBRAS_8820i_Interfaces
+      name: OLT_INTELBRAS_8820i_Interfaces
+      groups:
+        -
+          name: 'OLT INTELBRAS GPON'
+      discovery_rules:
+        -
+          uuid: a5aaee1617e24353855eadf72563325c
+          name: 'Discovery Interfaces (eth)'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#NAME},1.3.6.1.4.1.26138.1.1.1.1.1.2]'
+          key: discovery.interfaces.eth
+          delay: 1d
+          filter:
+            conditions:
+              -
+                macro: '{#NAME}'
+                value: ^eth
+                formulaid: A
+          item_prototypes:
+            -
+              uuid: 024a4503f35b4ed1b7b2fe7e99a086c9
+              name: 'Interface Status - {#NAME}'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.2.1.2.2.1.8.{#SNMPINDEX}'
+              key: 'interface.eth.status[{#NAME}]'
+              delay: 5m
+              history: 30d
+              trends: 60d
+              tags:
+                -
+                  tag: Application
+                  value: interface
+                -
+                  tag: Application
+                  value: status
+        -
+          uuid: a70982c2512146008a2fa522f2c09d33
+          name: 'Discovery Interfaces (gpon)'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#NAME},1.3.6.1.4.1.26138.1.1.1.1.1.2]'
+          key: discovery.interfaces.gpon
+          delay: 1d
+          filter:
+            conditions:
+              -
+                macro: '{#NAME}'
+                value: gpon
+                formulaid: A
+          item_prototypes:
+            -
+              uuid: 66b421ba80a74c86a042d24ba0d3f53b
+              name: 'Interface Status - {#NAME}'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.2.1.2.2.1.8.{#SNMPINDEX}'
+              key: 'interface.gpon.status[{#NAME}]'
+              delay: 3m
+              history: 30d
+              trends: 60d
+              tags:
+                -
+                  tag: Application
+                  value: interface
+                -
+                  tag: Application
+                  value: status
+            -
+              uuid: e0dfc8b0cc904cc2abad72fc33a5fc2e
+              name: 'Interface SFP Rx Power - {#NAME}'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.26138.1.1.1.1.1.10.{#SNMPINDEX}'
+              key: 'sfpStatusIfRxPower[{#NAME}]'
+              delay: 15m
+              history: 30d
+              trends: 60d
+              value_type: FLOAT
+              units: dBm
+              tags:
+                -
+                  tag: Application
+                  value: interface
+                -
+                  tag: Application
+                  value: 'rx power'
+            -
+              uuid: 2c4cae8db0f6492db50270d80fec400a
+              name: 'Interface SFP Temperatura - {#NAME}'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.26138.1.1.1.1.1.6.{#SNMPINDEX}'
+              key: 'sfpStatusIfTemperature[{#NAME}]'
+              delay: 15m
+              history: 30d
+              trends: 60d
+              units: °C
+              tags:
+                -
+                  tag: Application
+                  value: interface
+                -
+                  tag: Application
+                  value: temperatura
+            -
+              uuid: b75094e1234148229d6d0429ec257ce4
+              name: 'Interface SFP Tx Bias - {#NAME}'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.26138.1.1.1.1.1.8.{#SNMPINDEX}'
+              key: 'sfpStatusIfTxBias[{#NAME}]'
+              delay: 15m
+              history: 30d
+              trends: 60d
+              units: mA
+              tags:
+                -
+                  tag: Application
+                  value: bias
+                -
+                  tag: Application
+                  value: interface
+            -
+              uuid: c63d287bb7ce4287be7e24b7850bc9b6
+              name: 'Interface SFP Tx Power - {#NAME}'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.26138.1.1.1.1.1.9.{#SNMPINDEX}'
+              key: 'sfpStatusIfTxPower[{#NAME}]'
+              delay: 15m
+              history: 30d
+              trends: 60d
+              value_type: FLOAT
+              units: dBm
+              tags:
+                -
+                  tag: Application
+                  value: interface
+                -
+                  tag: Application
+                  value: 'tx power'
+            -
+              uuid: 6bc359d61a8347349ff2fd2744f8763a
+              name: 'Interface SFP Voltagem - {#NAME}'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.4.1.26138.1.1.1.1.1.7.{#SNMPINDEX}'
+              key: 'sfpStatusIfVoltage[{#NAME}]'
+              delay: 15m
+              history: 30d
+              trends: 60d
+              value_type: FLOAT
+              units: V
+              tags:
+                -
+                  tag: Application
+                  value: voltagem
+        -
+          uuid: 000116b34e2149d8aec76856d61da8f9
+          name: 'Discovery Interfaces (xeth)'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#NAME},1.3.6.1.4.1.26138.1.1.1.1.1.2]'
+          key: discovery.interfaces.xeth
+          delay: 1d
+          filter:
+            conditions:
+              -
+                macro: '{#NAME}'
+                value: ^xeth
+                formulaid: A
+          item_prototypes:
+            -
+              uuid: bf640e68dd8749a1baf9440d77a5ba0f
+              name: 'Interface Status - {#NAME}'
+              type: SNMP_AGENT
+              snmp_oid: '1.3.6.1.2.1.2.2.1.8.{#SNMPINDEX}'
+              key: 'interface.xeth.status[{#NAME}]'
+              delay: 3m
+              history: 30d
+              trends: 90d
+              description: |
+                1 = ativo
+                2 = inativo
+              tags:
+                -
+                  tag: Application
+                  value: interface
+                -
+                  tag: Application
+                  value: status
+    -
+      uuid: c599b8f8b2da4322a8d74c8366ed5098
+      template: OLT_INTELBRAS_8820i_ONUs
+      name: OLT_INTELBRAS_8820i_ONUs
+      groups:
+        -
+          name: 'OLT INTELBRAS GPON'
+    -
+      uuid: 66d0b7b8111a497eb468a98dcf93a199
+      template: OLT_INTELBRAS_8820i_Operacional
+      name: OLT_INTELBRAS_8820i_Operacional
+      description: |
+        Uptime
+        Memoria Total
+        Memoria Livre
+        CPU
+      groups:
+        -
+          name: 'OLT INTELBRAS GPON'
+      items:
+        -
+          uuid: e6e363aecf0b47fda27592767c642ca1
+          name: CPU
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.11.9.0
+          key: cpuUsage
+          delay: 5m
+          trends: 90d
+          units: '%'
+          tags:
+            -
+              tag: Application
+              value: geral
+          triggers:
+            -
+              uuid: dc25fd9916c04c0db058ad2ff0ea8cf1
+              expression: last(/OLT_INTELBRAS_8820i_Operacional/cpuUsage)>80
+              name: 'Alerta CPU'
+              opdata: 'CPU acima de 80%'
+              priority: WARNING
+              manual_close: 'YES'
+        -
+          uuid: 56d74ff5b25b4cfebb700e7a6ad8731e
+          name: 'Memoria Livre'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.4.6.0
+          key: memFree
+          delay: 50m
+          trends: 90d
+          units: kb
+          tags:
+            -
+              tag: Application
+              value: geral
+        -
+          uuid: 1078c0c4f9cc498aa4071a9d70a1bdba
+          name: 'Memoria Total'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.4.5.0
+          key: memTotal
+          delay: 50m
+          history: 30d
+          trends: 30d
+          units: KB
+          tags:
+            -
+              tag: Application
+              value: geral
+        -
+          uuid: 0d26540411824348ad8c45b5e897620d
+          name: Uptime
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.1.3.0
+          key: uptime
+          trends: 90d
+          units: uptime
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+          tags:
+            -
+              tag: Application
+              value: geral
+    -
+      uuid: f492c5fdc3284550b864cea6b4f2afd7
+      template: 'SC - OLT GPON INTELBRAS 8820i - contator'
+      name: 'SC - OLT GPON INTELBRAS 8820i - contator'
+      groups:
+        -
+          name: 'OLT INTELBRAS GPON'
+      items:
+        -
+          uuid: 5d7bbcae8940430186b4e1a1614e45b4
+          name: 'TOTAL ATIVAS PON 1'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.56.9
+          key: act.pon1
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total ativas'
+        -
+          uuid: aa52bb8282314f9ea5eefda5840c906b
+          name: 'TOTAL ATIVAS PON 2'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.55.10
+          key: act.pon2
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total ativas'
+        -
+          uuid: 05018e033ce24ca297cfdc4f4b69eb25
+          name: 'TOTAL ATIVAS PON 3'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.55.11
+          key: act.pon3
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total ativas'
+        -
+          uuid: 01b0cc233c474940b090c82b2419f803
+          name: 'TOTAL ATIVAS PON 4'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.55.12
+          key: act.pon4
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total ativas'
+        -
+          uuid: 4bf8467f82434168996393a3f502928f
+          name: 'TOTAL ATIVAS PON 5'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.55.13
+          key: act.pon5
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total ativas'
+        -
+          uuid: 920cc9a839634aaa9c2c9f84c23f05bf
+          name: 'TOTAL ATIVAS PON 6'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.55.14
+          key: act.pon6
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total ativas'
+        -
+          uuid: 4613436bf08a42428bf8cd9b48b81faf
+          name: 'TOTAL ATIVAS PON 7'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.55.15
+          key: act.pon7
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total ativas'
+        -
+          uuid: afe01f363b5f4fc4905664eeea0afdfb
+          name: 'TOTAL ATIVAS PON 8'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.55.16
+          key: act.pon8
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total ativas'
+        -
+          uuid: ac95abde968940e89c4b7dee9c52b796
+          name: 'TOTAL INATIVAS PON 1'
+          type: CALCULATED
+          key: inac.pon1
+          params: last(//reg.pon1)-last(//act.pon1)
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total inativas'
+        -
+          uuid: f75e3122397046ac98ed4b3333d3cf32
+          name: 'TOTAL INATIVAS PON 2'
+          type: CALCULATED
+          key: inac.pon2
+          params: last(//reg.pon2)-last(//act.pon2)
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total inativas'
+        -
+          uuid: 233b9bdc10094975ac405f655358092f
+          name: 'TOTAL INATIVAS PON 3'
+          type: CALCULATED
+          key: inac.pon3
+          params: last(//reg.pon3)-last(//act.pon3)
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total inativas'
+        -
+          uuid: a14a8fa8a8984d618528c153136978d9
+          name: 'TOTAL INATIVAS PON 4'
+          type: CALCULATED
+          key: inac.pon4
+          params: last(//reg.pon4)-last(//act.pon4)
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total inativas'
+        -
+          uuid: 2373f1ef24704a0f8bebe5508b81f873
+          name: 'TOTAL INATIVAS PON 5'
+          type: CALCULATED
+          key: inac.pon5
+          params: last(//reg.pon5)-last(//act.pon5)
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total inativas'
+        -
+          uuid: b921fd79c5fa42e5a25230e5dea92b9e
+          name: 'TOTAL INATIVAS PON 6'
+          type: CALCULATED
+          key: inac.pon6
+          params: last(//reg.pon6)-last(//act.pon6)
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total inativas'
+        -
+          uuid: e343d6ef63324b83a19e93cc4e7214bb
+          name: 'TOTAL INATIVAS PON 7'
+          type: CALCULATED
+          key: inac.pon7
+          params: last(//reg.pon7)-last(//act.pon7)
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total inativas'
+        -
+          uuid: a21e3af1452a45b6b7ef35155d44e5db
+          name: 'TOTAL INATIVAS PON 8'
+          type: CALCULATED
+          key: inac.pon8
+          params: last(//reg.pon8)-last(//act.pon8)
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total inativas'
+        -
+          uuid: 67484c2ce4c74af6aef35d79196bea96
+          name: 'TOTAL REGISTRADAS PON 1'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.56.9
+          key: reg.pon1
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total registradas'
+        -
+          uuid: f27b9f374bc84cf381c62e2eee20c6ef
+          name: 'TOTAL REGISTRADAS PON 2'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.56.10
+          key: reg.pon2
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total registradas'
+        -
+          uuid: 79597c0c82164a54bf2fd68b6449b95c
+          name: 'TOTAL REGISTRADAS PON 3'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.56.11
+          key: reg.pon3
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total registradas'
+        -
+          uuid: 79361fb334664c7fa72fa182b445a7b6
+          name: 'TOTAL REGISTRADAS PON 4'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.56.12
+          key: reg.pon4
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total registradas'
+        -
+          uuid: 3f46d1023a274720bce2f9e735bd1fb6
+          name: 'TOTAL REGISTRADAS PON 5'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.56.13
+          key: reg.pon5
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total registradas'
+        -
+          uuid: d86ca5366eda45129f5fe2c8e6020326
+          name: 'TOTAL REGISTRADAS PON 6'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.56.14
+          key: reg.pon6
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total registradas'
+        -
+          uuid: 0a106a4afa3f44d09f95e5e672c4237a
+          name: 'TOTAL REGISTRADAS PON 7'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.56.15
+          key: reg.pon7
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total registradas'
+        -
+          uuid: 2d6457406c824023b01277dacd2055f9
+          name: 'TOTAL REGISTRADAS PON 8'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.26138.1.4.1.1.1.56.16
+          key: reg.pon8
+          history: 60d
+          trends: 120d
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - '600'
+          tags:
+            -
+              tag: contador
+              value: 'total registradas'
+  graphs:
+    -
+      uuid: c6a346b5f42a48baaf0235e9cf9aa781
+      name: 'PON 1'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 1A7C11
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: act.pon1
+        -
+          sortorder: '2'
+          color: F63100
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: inac.pon1
+        -
+          sortorder: '3'
+          color: 2774A4
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: reg.pon1
+    -
+      uuid: d5b9fb3d952c40aabba30add395f080c
+      name: 'PON 2'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 1A7C11
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: act.pon1
+        -
+          sortorder: '2'
+          color: F63100
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: inac.pon1
+        -
+          sortorder: '3'
+          color: 2774A4
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: reg.pon1
+    -
+      uuid: 280eab63b6144fb382670e7ad35025f1
+      name: 'PON 3'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 1A7C11
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: act.pon3
+        -
+          sortorder: '2'
+          color: F63100
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: inac.pon1
+        -
+          sortorder: '3'
+          color: 2774A4
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: reg.pon1
+    -
+      uuid: 813774d7433f4937875641affbb49221
+      name: 'PON 4'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 1A7C11
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: act.pon4
+        -
+          sortorder: '2'
+          color: F63100
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: inac.pon4
+        -
+          sortorder: '3'
+          color: 2774A4
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: reg.pon4
+    -
+      uuid: a23344cf5730455996daf10a3634cdf1
+      name: 'PON 5'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 1A7C11
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: act.pon5
+        -
+          sortorder: '2'
+          color: F63100
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: inac.pon5
+        -
+          sortorder: '3'
+          color: 2774A4
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: reg.pon5
+    -
+      uuid: 43fc16abe13d45f8827c7e8411eee6f2
+      name: 'PON 6'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 1A7C11
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: act.pon6
+        -
+          sortorder: '2'
+          color: F63100
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: inac.pon6
+        -
+          sortorder: '3'
+          color: 2774A4
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: reg.pon6
+    -
+      uuid: c3b9a240e942453dabe06547d9b6186f
+      name: 'PON 7'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 1A7C11
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: act.pon7
+        -
+          sortorder: '2'
+          color: F63100
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: inac.pon7
+        -
+          sortorder: '3'
+          color: 2774A4
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: reg.pon7
+    -
+      uuid: ce5197e345d34f478bf7f526903393cf
+      name: 'PON 8'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 1A7C11
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: act.pon8
+        -
+          sortorder: '2'
+          color: F63100
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: inac.pon8
+        -
+          sortorder: '3'
+          color: 2774A4
+          item:
+            host: 'SC - OLT GPON INTELBRAS 8820i - contator'
+            key: reg.pon8
